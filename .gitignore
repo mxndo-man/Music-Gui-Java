@@ -1,5 +1,10 @@
 *.class
 .env
 .venv
-
-
+.vscode
+*.swp
+target/
+bin/
+.project
+.classpath
+.settings/
