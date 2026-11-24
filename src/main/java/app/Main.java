@@ -1,33 +1,33 @@
-import java.awt.*;
+package app;
 
-class button {
-  button() {
-    Frame f = new Frame();
+import javafx.application.Platform;
+import javax.swing.SwingUtilities;
+import musicLib.Library;
+import musicLib.localSongs;
+import musicPlayer.Player;
 
-    // Button 1 created
-    // OK button
-    Button b1 = new Button("OK");
-    b1.setBounds(100, 50, 50, 50);
-    f.add(b1);
+/**
+ * Starts the app and builds the window.
+ *
+ * Main only builds the buttons and passes clicks to @see Player.
+ * To see how the display is being shown take a look at @see PlayerWindow.
+ * It never plays songs itself, the Player decides what plays.
+ */
+public class Main {
+  public static void main(String[] args) {
+    // JavaFX has to be started before any MediaPlayer is made,
+    // otherwise localFile.play() crashes with "Toolkit not initialized".
+    Platform.startup(() -> {
+    });
+    // Keep JavaFX alive even though we never open a JavaFX window.
+    Platform.setImplicitExit(false);
 
-    // Button 2 created
-    // Submit button
-    Button b2 = new Button("SUBMIT");
-    b2.setBounds(100, 101, 50, 50);
-    f.add(b2);
+    Library musLib = new Library();
+    localSongs local = new localSongs();
+    Player player = new Player(musLib);
 
-    // Button 3 created
-    // Cancel button
-    Button b3 = new Button("CANCEL");
-    b3.setBounds(100, 150, 80, 50);
-    f.add(b3);
-
-    f.setSize(500, 500);
-    f.setLayout(null);
-    f.setVisible(true);
-  }
-
-  public static void main(String a[]) {
-    new button();
+    // Swing windows should be built on the Swing thread.
+    musLib.addSource(local);
+    SwingUtilities.invokeLater(() -> new PlayerWindow(player, local).show());
   }
 }
