@@ -4,19 +4,33 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
 
+/**
+ * This file should only handle local files, mp3 files.
+ *
+ * For more ref take a look at @see Track, its abtract class.
+ *
+ */
+
 public class localFile extends Track {
   private MediaPlayer musicPlayer;
   private final File file;
 
   public localFile(File file) {
-    // Constructor inorder to implement the approriate names for the song file.
-    super(file.getAbsolutePath(), file.getName().replace(".mp3", ""), "Unknown Artist");
+    super(file.getAbsolutePath(), stripExtension(file.getName()), "Unknown Artist");
     this.file = file;
+  }
+  // "Song.MP3" -> "Song", "my.song.mp3" -> "my.song" (only removes the last
+  // extension)
+
+  // getting the index of where .mp3 is located.
+  private static String stripExtension(String name) {
+    int dot = name.lastIndexOf('.');
+
+    return dot > 0 ? name.substring(0, dot) : name;
   }
 
   @Override
   public void pause() {
-    // Simply pauses the file
     if (musicPlayer != null) {
       musicPlayer.pause();
     }
@@ -24,7 +38,6 @@ public class localFile extends Track {
 
   @Override
   public void play() {
-    // If null then find the path to the file inorder to play it.
     if (musicPlayer == null) {
       musicPlayer = new MediaPlayer(new Media(file.toURI().toString()));
     }
@@ -36,7 +49,6 @@ public class localFile extends Track {
   public void stop() {
     if (musicPlayer != null) {
       musicPlayer.stop();
-      // To clear up memory of the track
       musicPlayer.dispose();
       musicPlayer = null;
     }
