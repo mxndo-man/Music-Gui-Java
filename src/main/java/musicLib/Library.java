@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A class where users can see their library for the music gui.
  * 
- * The library holds every {@link MusicSource} (local MP3s, Spotify) and
+ * The library holds every @see MusicSource (local MP3s, Spotify) and
  * combines their tracks into a single list.
  */
 public class Library {
