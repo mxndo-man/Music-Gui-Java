@@ -1,3 +1,0 @@
-### Spotify ipod touch gui
-
-
