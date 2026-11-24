@@ -4,15 +4,16 @@ package musicLib;
  * Base class for any playable song in the music library.
  *
  * 
- * A {@code Track} holds the metadata that every song has, no matter where
+ * A @see Track holds the metadata that every song has, no matter where
  * it comes from: an ID, a song name and an author. Subclasses such as
- * {@link localFile}(local MP3s) and {@link spotifyTrack} decide how the song
- * actually plays by
- * implementing {@link #play()}, {@link #pause()} and {@link #stop()}.
+ * 
+ * @see localFile}(local MP3s) and @see spotifyTrack} decide how the song
+ *      actually plays by
+ *      implementing @see #play(), @see #pause() and @see #stop().
  *
- * The class also counts how many {@code Track} instances have been
- * created, using a static counter shared by all subclasses
- * (see {@link #getCounter()}).
+ *      The class also counts how many @see Track, instances have been
+ *      created, using a static counter shared by all subclasses
+ *      (see @see #getCounter()).
  *
  * @see Library
  */
@@ -22,6 +23,7 @@ public abstract class Track {
   private final String author;
   private static int counter = 0;
 
+  // Construcutor every class should listen to. (Of course ones that use it)
   protected Track(String songId, String songName, String author) {
     this.songId = songId;
     this.songName = songName;
@@ -29,10 +31,13 @@ public abstract class Track {
     counter++;
   }
 
+  // Abstract: Play the current song, either on double click what is loaded.
   public abstract void play();
 
+  // Abstract: Puases the current song.
   public abstract void pause();
 
+  // Stop the songs, should be used during next and also should clear memory.
   public abstract void stop();
 
   public String getId() {
@@ -51,9 +56,9 @@ public abstract class Track {
     return counter;
   }
 
+  // Inorder to get the name and author of the file.
   @Override
   public String toString() {
-    // If mp3 cannot get songname, author name
     return this.songName + " - " + this.author;
   }
 }
